@@ -22,7 +22,7 @@ import { clearUserRoleCookie, setUserRoleCookie } from "@/lib/auth-cookie"
 interface AuthContextValue {
   user: AuthUser | null
   isLoading: boolean
-  login: (email: string, password: string, options?: { forceLogout?: boolean }) => Promise<AuthUser>
+  login: (phone: string, password: string, options?: { forceLogout?: boolean }) => Promise<AuthUser>
   register: (data: RegisterRequest) => Promise<void>
   logout: () => Promise<void>
   forceLogout: (deviceType: "PC" | "MOBILE") => Promise<void>
@@ -64,11 +64,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [refreshUser])
 
   const login = async (
-    email: string,
+    phone: string,
     password: string,
     options?: { forceLogout?: boolean }
   ) => {
-    const normalizedEmail = email.trim().toLowerCase()
+    const normalizedPhone = phone.trim().replace(/[\s-]/g, "")
     const normalizedPassword = password.trim()
 
     const data = await api<{
@@ -78,7 +78,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }>("/auth/login", {
       method: "POST",
       body: JSON.stringify({
-        email: normalizedEmail,
+        phone: normalizedPhone,
         password: normalizedPassword,
         deviceFingerprint: getDeviceFingerprint(),
         deviceType: getDeviceType(),

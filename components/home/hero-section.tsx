@@ -11,6 +11,9 @@ import type { PlatformStats, PublicHomepageSection } from "@fxprime/types"
 import { api } from "@/lib/api"
 import { mergeHomepageSection } from "@/lib/site-content-defaults"
 
+const DEFAULT_HERO_IMAGE =
+  "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&q=80"
+
 interface HeroSectionProps {
   stats?: PlatformStats | null
   statsLoading?: boolean
@@ -96,13 +99,13 @@ export function HeroSection({ stats: externalStats, statsLoading, section }: Her
             className="relative"
           >
             <div className="relative mx-auto aspect-[4/3] w-full max-w-md lg:max-w-lg">
-              <div className="relative h-full w-full overflow-hidden rounded-[32px] bg-gradient-to-br from-primary/20 to-accent/20 p-1">
-                <div className="h-full w-full overflow-hidden rounded-[28px] bg-card">
+              <div className="relative h-full w-full overflow-visible rounded-[32px] bg-gradient-to-br from-primary/10 to-accent/10 p-1">
+                <div className="h-full w-full overflow-visible rounded-[28px] flex items-end justify-center">
                   <Image
-                    src={process.env.NEXT_PUBLIC_HERO_IMAGE_URL || "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?q=80&w=1200&auto=format&fit=crop"}
-                    alt="Law preparation and legal education"
+                    src={process.env.NEXT_PUBLIC_HERO_IMAGE_URL || DEFAULT_HERO_IMAGE}
+                    alt="Law student graduate"
                     fill
-                    className="object-cover"
+                    className="object-contain mix-blend-multiply drop-shadow-2xl"
                     priority
                   />
                 </div>

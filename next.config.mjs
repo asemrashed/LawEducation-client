@@ -29,8 +29,13 @@ const nextConfig = {
     localPatterns: [
       { pathname: "/uploads/**" },
       { pathname: "/logo/**" },
+      { pathname: "/graduate.png" },
+      { pathname: "/Hero-Image.jpeg" },
       { pathname: "/Heor-Image.jpeg" },
       { pathname: "/Demo.avif" },
+      { pathname: "/placeholder.svg" },
+      { pathname: "/placeholder-logo.svg" },
+      { pathname: "/icon.svg" },
     ],
     remotePatterns: [
       { protocol: "http", hostname: "localhost", pathname: "/uploads/**" },

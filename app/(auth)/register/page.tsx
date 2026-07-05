@@ -27,7 +27,11 @@ const schema = z.object({
   firstName: z.string().trim().min(1, "First name required"),
   lastName: z.string().trim().min(1, "Last name required"),
   email: z.string().trim().email("Valid email required"),
-  phone: z.string().trim().optional(),
+  phone: z
+    .string()
+    .trim()
+    .min(1, "Phone number required")
+    .regex(/^01\d{9}$/, "Enter a valid 11-digit phone (01XXXXXXXXX)"),
   country: z.string().trim().min(1, "Country required"),
   password: z.string().trim().min(8, "Password must be at least 8 characters"),
 })
@@ -57,7 +61,7 @@ export default function RegisterPage() {
     setError(null)
     try {
       await registerUser(data)
-      const loggedInUser = await login(data.email, data.password)
+      const loggedInUser = await login(data.phone, data.password)
       toast.success("Account created! Check your email to verify before enrolling or paying.")
       router.push(getSettingsPath(loggedInUser.role))
     } catch (err) {
@@ -130,7 +134,7 @@ export default function RegisterPage() {
             )}
           </div>
           <div>
-            <Label htmlFor="phone">Phone (optional)</Label>
+            <Label htmlFor="phone">Phone Number</Label>
             <Input
               id="phone"
               type="tel"

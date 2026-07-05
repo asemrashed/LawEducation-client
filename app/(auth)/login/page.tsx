@@ -17,7 +17,11 @@ import { cn } from "@/lib/utils"
 import { toast } from "sonner"
 
 const schema = z.object({
-  email: z.string().trim().email("Valid email required"),
+  phone: z
+    .string()
+    .trim()
+    .min(1, "Phone number required")
+    .regex(/^01\d{9}$/, "Enter a valid 11-digit phone (01XXXXXXXXX)"),
   password: z.string().trim().min(1, "Password required"),
 })
 
@@ -51,7 +55,7 @@ function LoginContent() {
     setDeviceLimit(false)
     setCredentials(data)
     try {
-      const loggedInUser = await login(data.email, data.password)
+      const loggedInUser = await login(data.phone, data.password)
       toast.success("Welcome back!")
       router.push(resolveLoginRedirect(loggedInUser.role, redirect))
     } catch (err) {
@@ -71,7 +75,7 @@ function LoginContent() {
     setLoading(true)
     setError(null)
     try {
-      const loggedInUser = await login(credentials.email, credentials.password, {
+      const loggedInUser = await login(credentials.phone, credentials.password, {
         forceLogout: true,
       })
       toast.success("Welcome back!")
@@ -96,7 +100,7 @@ function LoginContent() {
           </Link>
           <h1 className="mt-6 text-2xl font-bold text-foreground">Welcome back</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Sign in with your email and password
+            Sign in with your phone number and password
           </p>
         </div>
 
@@ -108,17 +112,18 @@ function LoginContent() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="phone">Phone Number</Label>
             <Input
-              id="email"
-              type="email"
-              autoComplete="username"
-              placeholder="you@example.com"
+              id="phone"
+              type="tel"
+              inputMode="numeric"
+              autoComplete="tel"
+              placeholder="01XXXXXXXXX"
               className="mt-1 rounded-xl"
-              {...register("email")}
+              {...register("phone")}
             />
-            {errors.email && (
-              <p className="mt-1 text-sm text-destructive">{errors.email.message}</p>
+            {errors.phone && (
+              <p className="mt-1 text-sm text-destructive">{errors.phone.message}</p>
             )}
           </div>
           <div>

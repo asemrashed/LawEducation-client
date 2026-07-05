@@ -4,9 +4,9 @@ import { prisma } from "../../phy-server/src/lib/prisma"
 const hasDatabase = !!process.env.DATABASE_URL
 const PAID_COURSE_SLUG = "forex-trading-masterclass"
 
-async function login(page: import("@playwright/test").Page, email: string, password: string) {
+async function login(page: import("@playwright/test").Page, phone: string, password: string) {
   await page.goto("/login")
-  await page.getByLabel("Email").fill(email)
+  await page.getByLabel("Phone Number").fill(phone)
   await page.getByLabel("Password").fill(password)
   await page.getByRole("button", { name: "Sign In" }).click()
   await expect(page).toHaveURL(/\/dashboard/, { timeout: 20_000 })
@@ -17,6 +17,7 @@ test.describe("Student purchase flow", () => {
 
   test("register → buy course → dev payment → enrolled", async ({ page }) => {
     const email = `e2e-${Date.now()}@fxprime.test`
+    const phone = `018${String(Date.now()).slice(-8)}`
     const password = "password12345"
 
     try {
@@ -24,6 +25,7 @@ test.describe("Student purchase flow", () => {
     await page.getByLabel("First Name").fill("E2E")
     await page.getByLabel("Last Name").fill("Student")
     await page.getByLabel("Email").fill(email)
+    await page.getByLabel("Phone").fill(phone)
     await page.getByLabel("Password").fill(password)
     await page.getByRole("button", { name: "Register" }).click()
 
@@ -34,7 +36,7 @@ test.describe("Student purchase flow", () => {
       data: { isVerified: true },
     })
     await page.context().clearCookies()
-    await login(page, email, password)
+    await login(page, phone, password)
 
     await page.goto(`/courses/${PAID_COURSE_SLUG}`)
     await expect(page.getByRole("button", { name: "Buy Now" })).toBeVisible()
