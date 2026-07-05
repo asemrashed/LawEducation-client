@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test"
 import { prisma } from "../../phy-server/src/lib/prisma"
 
 const hasDatabase = !!process.env.DATABASE_URL
-const PAID_COURSE_SLUG = "forex-trading-masterclass"
+const PAID_COURSE_SLUG = "law-fundamentals-masterclass"
 
 async function login(page: import("@playwright/test").Page, phone: string, password: string) {
   await page.goto("/login")

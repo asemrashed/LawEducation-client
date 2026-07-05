@@ -41,6 +41,9 @@ const nextConfig = {
       { protocol: "http", hostname: "localhost", pathname: "/uploads/**" },
       { protocol: "https", hostname: "phynixeducation.com", pathname: "/uploads/**" },
       { protocol: "https", hostname: "api.phynixeducation.com", pathname: "/uploads/**" },
+      { protocol: "https", hostname: "**.ngrok-free.app", pathname: "/**" },
+      { protocol: "https", hostname: "**.ngrok-free.dev", pathname: "/**" },
+      { protocol: "https", hostname: "**.ngrok.io", pathname: "/**" },
       { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
       { protocol: "https", hostname: "img.youtube.com", pathname: "/vi/**" },
       { protocol: "https", hostname: "**.amazonaws.com", pathname: "/**" },
@@ -62,6 +65,10 @@ const nextConfig = {
       {
         source: "/uploads/:path*",
         destination: `${backend}/uploads/:path*`,
+      },
+      {
+        source: "/socket.io/:path*",
+        destination: `${backend}/socket.io/:path*`,
       },
     ]
   },
