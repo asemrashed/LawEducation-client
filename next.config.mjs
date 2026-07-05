@@ -39,6 +39,7 @@ const nextConfig = {
     ],
     remotePatterns: [
       { protocol: "http", hostname: "localhost", pathname: "/uploads/**" },
+      { protocol: "https", hostname: "law-education.vercel.app", pathname: "/uploads/**" },
       { protocol: "https", hostname: "phynixeducation.com", pathname: "/uploads/**" },
       { protocol: "https", hostname: "api.phynixeducation.com", pathname: "/uploads/**" },
       { protocol: "https", hostname: "**.ngrok-free.app", pathname: "/**" },
